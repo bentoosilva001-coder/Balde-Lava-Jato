@@ -448,6 +448,7 @@ if(!n||tel.length<10||!dia||!hh){toast('Preencha nome, WhatsApp, data e hora.');
 const dur=s.min||60,ini=tm(hh,0),fim=ini+dur;
 if(ini<tm(DB.cfg.ab||'07:00',0)||fim>tm(DB.cfg.fc||'19:00',0)){toast('Fora do horário da agenda.');return}
 try{const B=await FB.blk(dia),A=ativos(),want=$('mC').value;let c={n:''};
+if(!A.length&&(DB.cb||[]).length){toast('Todos os colaboradores estão indisponíveis. Marque Disponível em Equipe.');return}
 if(A.length){const bs=nb(ini,fim);c=(want?A.filter(x=>x.n==want):A).find(x=>bs.every(k=>!B.some(y=>y.c==x.n&&y.bk==k)));if(!c){toast('Sem colaborador livre nesse horário.');return}}
 const id=uid(),ids=A.length?nb(ini,fim).map(k=>[dia+'_'+slug(c.n)+'_'+k,{dia,c:c.n,bk:k,id}]):[];
 const r={id,n:n.slice(0,60),tel,pl:pl($('mp').value),obs:'',serv:s.n,dia,h:hh,ini,fim,c:c.n,tot:s.p||'',st:'confirmado',cr:Date.now(),bl:ids.map(x=>x[0])};

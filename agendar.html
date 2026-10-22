@@ -155,7 +155,7 @@ const OP=()=>tm(CFG.ab||'07:00',0),CL=()=>tm(CFG.fc||'19:00',0),fechado=d=>(CFG.
 const ativos=()=>CB.filter(c=>c.on&&c.n);
 const slug=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const nb=(i,f)=>{const a=[];for(let b=Math.floor(i/30);b<Math.ceil(f/30);b++)a.push(b);return a};
-const livre=(B,ini,fim)=>{const A=ativos();if(!A.length)return{n:''};const bs=nb(ini,fim);return A.find(c=>bs.every(k=>!B.some(x=>x.c==c.n&&x.bk==k)))};
+const livre=(B,ini,fim)=>{const A=ativos();if(!A.length)return CB.length?undefined:{n:''};const bs=nb(ini,fim);return A.find(c=>bs.every(k=>!B.some(x=>x.c==c.n&&x.bk==k)))};
 const slots=(B,d,dur)=>{const r=[];if(fechado(d))return r;for(let t=OP();t+dur<=CL();t+=30){if(d==hj()&&t<=agora())continue;if(livre(B,t,t+dur))r.push(t)}return r};
 const uid=()=>Array.from(crypto.getRandomValues(new Uint8Array(8)),b=>b.toString(36).padStart(2,'0')).join('');
 const SITE=()=>location.origin+location.pathname.replace(/[^/]*$/,'');
